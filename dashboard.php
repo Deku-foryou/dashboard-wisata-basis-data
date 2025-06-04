@@ -23,7 +23,7 @@ if(empty($_SESSION['username']) and empty($_SESSION['password']) ){
 <!doctype html>
 <html lang="en">
    <head>
-      <title>.:Dashboard - <?php echo ucfirst(($_GET['hal']))?></title>
+      <title>.:Dashboard - <?php echo ucwords(str_replace('_',' ', $_GET['hal']))?></title>
       <!-- Required meta tags -->
       <meta charset="utf-8" />
       <meta
@@ -38,6 +38,7 @@ if(empty($_SESSION['username']) and empty($_SESSION['password']) ){
          crossorigin="anonymous"/>
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
       <link rel="stylesheet" href="https://cdn.datatables.net/2.3.1/css/dataTables.dataTables.css">
+      <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/45.1.0/ckeditor5.css">
 
       <!-- Bootstrap CSS v5.2.1 -->
       <link rel="stylesheet" href="css/dashboard.css">
@@ -79,9 +80,9 @@ if(empty($_SESSION['username']) and empty($_SESSION['password']) ){
       href="dashboard.php?hal=galeri">Gallery</a>
       <a class="nav-link <?php echo ($_GET['hal'] == 'wisata') ? "active":"" ?>"
       href="dashboard.php?hal=wisata">Wisata</a>
-      <a class="nav-link <?php echo ($_GET['hal'] == 'kategori') ? "active":"" ?>"
+      <a class="nav-link <?php echo (($_GET['hal'] == 'kategori') or ($_GET['hal'] == 'tambah_kategori') or($_GET['hal'] == 'edit_kategori')) ? "active":"" ?>"
       href="dashboard.php?hal=kategori">Kategori</a>
-      <a class="nav-link <?php echo ($_GET['hal'] == 'berita') ? "active":"" ?>" 
+      <a class="nav-link <?php echo (($_GET['hal'] == 'berita') or ($_GET['hal'] == 'tambah_berita')) ? "active":"" ?>" 
       href="dashboard.php?hal=berita">Berita</a>
 
 
@@ -108,8 +109,23 @@ if(empty($_SESSION['username']) and empty($_SESSION['password']) ){
                case 'kategori':
                   include 'modul/mod_kategori/kategori.php';
                   break;
+               case 'tambah_kategori':
+                  include 'modul/mod_kategori/tambah_kategori.php';
+                  break;
                case 'berita':
                   include 'modul/mod_berita/berita.php';
+                  break;
+               case 'tambah_berita':
+                  include 'modul/mod_berita/tambah_berita.php';
+                  break;
+               case 'edit_kategori':
+                  include 'modul/mod_kategori/edit_kategori.php';
+                  break;
+               case 'hapus_kategori':
+                  include 'modul/mod_kategori/hapus_kategori.php';
+                  break;
+                case 'hapus_berita':
+                  include 'modul/mod_berita/hapus_berita.php';
                   break;
                case 'user':
                   include 'modul/mod_user/user.php';
@@ -140,6 +156,7 @@ if(empty($_SESSION['username']) and empty($_SESSION['password']) ){
 
       <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
       <script src="https://cdn.datatables.net/2.3.1/js/dataTables.js"></script>
+      <script src="https://cdn.ckeditor.com/ckeditor5/45.1.0/ckeditor5.umd.js"></script>
       <script>
                const table = new DataTable('#example', {
           columnDefs: [
