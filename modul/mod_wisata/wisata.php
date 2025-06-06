@@ -1,6 +1,8 @@
 <div class="container-fluid">
    <div class="card">
-      <div class="card-header"></div>
+      <div class="card-header">
+         <a href="dashboard.php?hal=tambah_wisata" class=" btn btn-primary"><i class="bi bi-plus-circle-fill"></i>  Data wisata</a>
+      </div>
       <div class="card-body">
          <table id="example" class="display" style="width:100%">
             <thead>

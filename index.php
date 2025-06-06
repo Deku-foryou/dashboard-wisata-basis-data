@@ -136,8 +136,8 @@ if((empty($_SESSION['username'])) and (empty($_SESSION['password']))){
 
 <!--login page-->
    <div class="container mt-5">
-      <div class="col-md-4 posisitengah">
-         <img src="image/icon.jpg" alt="icon" width="100" height="100" class="rounded mx-auto d-block ">
+      <div class="col-md-3 posisitengah">
+         <img src="image/wonderfull.png" alt="icon" width="100%" height="100%" class="rounded mx-auto d-block ">
          <div class="card mt-3 borderall">
             <!--<div class="card-header bg-primary text-white"> form login </div>-->
             <div class="card-body ">

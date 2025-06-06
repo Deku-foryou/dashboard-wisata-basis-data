@@ -15,8 +15,6 @@ if(empty($_SESSION['username']) and empty($_SESSION['password']) ){
    </center>
    ';
 }else{
-
-
 ?>
 
 
@@ -59,7 +57,7 @@ if(empty($_SESSION['username']) and empty($_SESSION['password']) ){
   <img src="image/icon.jpg" height="30px" width="30px" class="img-fluid d-block mx-auto mr-3" alt="...">
   <div class="media-body">
     <h5 class="mt-0 d-flex flex-column align-items-center"> <?php echo $_SESSION['namaadmin'] ?></h5>
-    <small><p class="mb-0"> <i class="bi bi-clock-history"></i> pkl : <?php echo date('H:i:s')?> wib</p></small>
+    <small><p class="mb-0"> <i class="bi bi-clock-history"></i> <?php echo date('H:i:s')?> WIB</p></small>
   </div>
 </div>
 </a></li>
@@ -78,7 +76,7 @@ if(empty($_SESSION['username']) and empty($_SESSION['password']) ){
       href="dashboard.php?hal=profil">Profile</a>
       <a class="nav-link <?php echo ($_GET['hal'] == 'galeri') ? "active":"" ?>" 
       href="dashboard.php?hal=galeri">Gallery</a>
-      <a class="nav-link <?php echo ($_GET['hal'] == 'wisata') ? "active":"" ?>"
+      <a class="nav-link <?php echo (($_GET['hal'] == 'wisata') or ($_GET['hal'] == 'tambah_wisata')) ? "active":"" ?>"
       href="dashboard.php?hal=wisata">Wisata</a>
       <a class="nav-link <?php echo (($_GET['hal'] == 'kategori') or ($_GET['hal'] == 'tambah_kategori') or($_GET['hal'] == 'edit_kategori')) ? "active":"" ?>"
       href="dashboard.php?hal=kategori">Kategori</a>
@@ -105,6 +103,9 @@ if(empty($_SESSION['username']) and empty($_SESSION['password']) ){
                   break;
                case 'wisata':
                   include 'modul/mod_wisata/wisata.php';
+                  break;
+               case 'tambah_wisata':
+                  include 'modul/mod_wisata/tambah_wisata.php';
                   break;
                case 'kategori':
                   include 'modul/mod_kategori/kategori.php';

@@ -27,7 +27,7 @@
                 <td><?php echo $r['nama_admin']?></td>
                 <td><?php echo date('d-m-Y', strtotime($r['tanggal_berita']))?></td>
                 <td><img src="././img_berita/<?php echo $r['foto_berita']?>" height="100" widht=""></td>
-                <td><a class="btn btn-danger" title="hapus" href="dashboard.php?hal=hapus_berita&id=<?php echo $r['id_berita'] ?>"><i class="bi bi-x-square"></i></a></td>
+                <td><a class="btn btn-danger" title="hapus" href="dashboard.php?hal=hapus_berita&id=<?php echo $r['id_berita'] ?>"><i class="bi bi-trash-fill"></i></a></td>
             </tr>
 
            <?php

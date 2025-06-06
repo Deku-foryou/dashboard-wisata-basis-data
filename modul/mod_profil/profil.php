@@ -1,6 +1,6 @@
 <div class="container-fluid">
    <div class="card">
-      <div class="card-header"> <strong>Ubah Konten Profil</strong></div>
+      <div class="card-header"> <strong>Ubah Konten Profil  <i class="bi bi-pencil-fill"></i></strong></div>
       <div class="card-body">
          <?php
          $sql = mysqli_query($koneksi, "SELECT * FROM tbl_profil");
