@@ -12,6 +12,7 @@
                   <th>Kategori</th>
                   <th>Lokasi Wisata</th>
                   <th>Maps</th>
+                  <th>Aksi</th>
                </tr>
             </thead>
             <tbody>
@@ -26,6 +27,11 @@
               <td><?php echo $r['lokasi_wisata']?></td>
               <td>
                <iframe width="175" height="100" src="<?php echo $r['link_peta']?>" style="border: 1px solid black"></iframe>
+              </td>
+              <td>
+               <a href="dashboard.php?hal=edit_wisata&id=<?php echo $r['id_wisata']?>" class="btn btn-success"><i class="bi bi-pencil-fill"></i></a>
+
+               <a href="dashboard.php?hal=hapus_wisata&id=<?php echo $r['id_wisata']?>" class="btn btn-danger"><i class="bi bi-trash3-fill"></i></a>
               </td>
               </tr>
               <?php

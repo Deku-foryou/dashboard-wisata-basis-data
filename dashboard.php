@@ -15,6 +15,23 @@ if(empty($_SESSION['username']) and empty($_SESSION['password']) ){
    </center>
    ';
 }else{
+   // grafik wisata berdasarkan kategori
+   $kategori_wisata = mysqli_query($koneksi, "SELECT * FROM tbl_kategori");
+   while ($r = mysqli_fetch_array($kategori_wisata)){
+      $nama_kategori[] = $r['nama_kategori'];
+      $jml_wisata = mysqli_query($koneksi, "SELECT COUNT(id_kategori) AS total FROM tbl_wisata WHERE id_kategori = '$r[id_kategori]'");
+      $a = mysqli_fetch_array($jml_wisata);
+      $total_wisata[] = $a['total'];
+   }
+   // grafik galeri berdasarkan wisata
+   $wisata = mysqli_query($koneksi, "SELECT * FROM tbl_wisata");
+   while ($r1 = mysqli_fetch_array($wisata)){
+      $nama_wisata[] = $r1['nama_wisata'];
+      $jml_galeri = mysqli_query($koneksi, "SELECT COUNT(id_wisata) AS total_galeri FROM tbl_galeri WHERE id_wisata = '$r1[id_wisata]'");
+      $a1 = mysqli_fetch_array($jml_galeri);
+      $total_galeri[] = $a1['total_galeri'];
+   }
+
 ?>
 
 
@@ -40,6 +57,11 @@ if(empty($_SESSION['username']) and empty($_SESSION['password']) ){
 
       <!-- Bootstrap CSS v5.2.1 -->
       <link rel="stylesheet" href="css/dashboard.css">
+
+      <!-- grafik js -->
+       <script
+       src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
+       </script>
        
    </head>
 
@@ -74,9 +96,9 @@ if(empty($_SESSION['username']) and empty($_SESSION['password']) ){
       href="dashboard.php?hal=home">Home</a>
       <a class="nav-link <?php echo ($_GET['hal'] == 'profil') ? "active":"" ?>" 
       href="dashboard.php?hal=profil">Profile</a>
-      <a class="nav-link <?php echo ($_GET['hal'] == 'galeri') ? "active":"" ?>" 
+      <a class="nav-link <?php echo (($_GET['hal'] == 'galeri') || ($_GET['hal'] == 'tambah_galeri') || ($_GET['hal'] == 'edit_galeri')) ? "active" : "" ?>" 
       href="dashboard.php?hal=galeri">Gallery</a>
-      <a class="nav-link <?php echo (($_GET['hal'] == 'wisata') or ($_GET['hal'] == 'tambah_wisata')) ? "active":"" ?>"
+      <a class="nav-link <?php echo (($_GET['hal'] == 'wisata') or ($_GET['hal'] == 'tambah_wisata') or ($_GET['hal'] == 'edit_wisata')) ? "active":"" ?>"
       href="dashboard.php?hal=wisata">Wisata</a>
       <a class="nav-link <?php echo (($_GET['hal'] == 'kategori') or ($_GET['hal'] == 'tambah_kategori') or($_GET['hal'] == 'edit_kategori')) ? "active":"" ?>"
       href="dashboard.php?hal=kategori">Kategori</a>
@@ -98,6 +120,15 @@ if(empty($_SESSION['username']) and empty($_SESSION['password']) ){
                case 'profil':
                   include 'modul/mod_profil/profil.php';
                   break;
+               case 'tambah_galeri':
+                  include 'modul/mod_galeri/tambah_galeri.php';
+                  break;
+               case 'edit_galeri':
+                  include 'modul/mod_galeri/edit_galeri.php';
+                  break;
+               case 'hapus_galeri':
+                  include 'modul/mod_galeri/hapus_galeri.php';
+                  break;
                case 'galeri':
                   include 'modul/mod_galeri/galeri.php';
                   break;
@@ -106,6 +137,12 @@ if(empty($_SESSION['username']) and empty($_SESSION['password']) ){
                   break;
                case 'tambah_wisata':
                   include 'modul/mod_wisata/tambah_wisata.php';
+                  break;
+               case 'edit_wisata':
+                  include 'modul/mod_wisata/edit_wisata.php';
+                  break;
+               case 'hapus_wisata':
+                  include 'modul/mod_wisata/hapus_wisata.php';
                   break;
                case 'kategori':
                   include 'modul/mod_kategori/kategori.php';
@@ -181,6 +218,62 @@ if(empty($_SESSION['username']) and empty($_SESSION['password']) ){
                   });
           })
           .draw();
+
+          const x = <?php echo json_encode($nama_kategori) ?>;
+          const y = <?php echo json_encode($total_wisata) ?>;
+          const warna_bar = [
+            "#007bff",
+            "#28a745",
+            "#6c757d",
+            "#dc3545",
+            "#ffc107",
+            "#17a2b8"
+          ];
+          
+          new Chart("grafikWisata", {
+            type: "pie",
+            data: {
+              labels: x,
+              datasets: [{
+                backgroundColor: warna_bar,
+                data: y
+              }]
+            },
+            options: {
+              title: {
+                display: true,
+                text: "Data Jumlah Wisata Berdasarkan Kategori"
+              }
+            }
+          });
+     //batas
+          const x1 = <?php echo json_encode($nama_wisata) ?>;
+          const y1 = <?php echo json_encode($total_galeri) ?>;
+          const warna_bar1 = [
+            "#007bff",
+            "#28a745",
+            "#6c757d",
+            "#dc3545",
+            "#ffc107",
+            "#17a2b8"
+          ];
+          
+          new Chart("grafikGaleri", {
+            type: "pie",
+            data: {
+              labels: x1,
+              datasets: [{
+                backgroundColor: warna_bar1,
+                data: y1
+              }]
+            },
+            options: {
+              title: {
+                display: true,
+                text: "Data Jumlah Wisata Berdasarkan Kategori"
+              }
+            }
+          });
       </script>
    </body>
 </html>
